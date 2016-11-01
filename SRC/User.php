@@ -33,42 +33,47 @@ class User {
         return $this;
     }
 
-    function setHashedPassword($hashedPassword) {
+    public function setHashedPassword($hashedPassword) {
         $newHashedPassword = password_hash($hashedPassword, PASSWORD_BCRYPT);
         $this->hashedPassword = $newHashedPassword;
     }
 
-    function setEmail($email) {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
-    function getId() {
+    public function getId() {
         return $this->id;
     }
 
-    function getUsername() {
+    public function getUsername() {
         return $this->username;
     }
 
-    function getEmail() {
+    public function getEmail() {
         return $this->email;
     }
     
     public function saveToDB(mysqli $connection) {
         if ($this->id == -1) {
             //  prepare statement - SQL injection ! ! !
-            $statement = $connection->prepare("INSERT INTO Users(username, hashedPassword, email) VALUES (?, ?, ?)");
+            $statement = $connection->prepare("INSERT INTO Users(username, hashed_password, email) VALUES (?, ?, ?)");
+            if (!$statement) {
+                return false;
+            }
             $statement->bind_param('sss', $this->username, $this->hashedPassword, $this->email);
             if ($statement->execute()) {
-                $this->id = $connection->insert_id;
+                $this->id = $statement->insert_id;
                 return true;
+            } else {
+                echo "Problem z zapytaniem: " . $statement.error;
             }
             return false;
         } else {
             $sql = "UPDATE Users SET username = '$this->username',
-                                                                                               hashedPassword = '$this->hashedPassword',
-                                                                                               email = '$this->email',
-                                                             WHERE id = $this->id";
+                                                                                               hashed_password = '$this->hashedPassword',
+                                                                                               email = '$this->email'
+                                                                                               WHERE id = $this->id";
             $result = $connection->query($sql);
             if ($result) {
                 return TRUE;
@@ -87,7 +92,7 @@ class User {
             $loadedUser = new User();
             $loadedUser->id = $row['id'];
             $loadedUser->setEmail($row['email']);
-            $loadedUser->hashedPassword = $row['hashedPassword'];
+            $loadedUser->hashedPassword = $row['hashed_password'];
             $loadedUser->username = $row['username'];
             
             return $loadedUser;
@@ -105,7 +110,7 @@ class User {
                  $loadedUser = new User();
                  $loadedUser->id = $row['id'];
                  $loadedUser->setEmail($row['email']);
-                 $loadedUser->hashedPassword = $row['hashedPassword'];
+                 $loadedUser->hashedPassword = $row['hashed_password'];
                  $loadedUser->username = $row['username'];
                  
                  $ret[$loadedUser->id] = $loadedUser;
