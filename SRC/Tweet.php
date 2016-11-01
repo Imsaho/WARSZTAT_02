@@ -34,10 +34,10 @@ class Tweet {
         return $this;
     }
 
-    public function setCreationDate($creationDate) {
-        $this->creationDate = $creationDate;
-        return $this;
-    }
+//    public function setCreationDate($creationDate) {
+//        $this->creationDate = $creationDate;
+//        return $this;
+//    }
 
     public function getId() {
         return $this->id;

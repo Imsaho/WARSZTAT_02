@@ -54,6 +54,11 @@ class User {
         return $this->email;
     }
     
+    public function getHashedPassword() {
+        return $this->hashedPassword;
+    }
+
+        
     public function saveToDB(mysqli $connection) {
         if ($this->id == -1) {
             //  prepare statement - SQL injection ! ! !
@@ -84,6 +89,24 @@ class User {
     
     static public function loadUserById(mysqli $connection, $id) {
         $sql = "SELECT * FROM Users WHERE id = $id";
+        $result = $connection->query($sql);
+        
+        if ($result != FALSE && $result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->setEmail($row['email']);
+            $loadedUser->hashedPassword = $row['hashed_password'];
+            $loadedUser->username = $row['username'];
+            
+            return $loadedUser;
+        }
+        return null;
+    }
+    
+    static public function loadUserByEmail(mysqli $connection, $email) {
+        $sql = "SELECT * FROM Users WHERE email = '$email'";
         $result = $connection->query($sql);
         
         if ($result != FALSE && $result->num_rows == 1) {
