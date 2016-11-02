@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+    echo "";
+} else {
+    echo "<br><a href='02_loginPage.php'>Zaloguj się</a>";
+    exit;
+}
 
 include_once 'SRC/User.php';
 include_once 'SRC/Tweet.php';
@@ -38,6 +45,7 @@ foreach ($allUserTweets as $tweet) {
 ?>
         </table>
     </div>
+        <a href="01_mainPage.php">Powrót do srony głównej</a>
     </body>
 </html>
 

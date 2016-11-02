@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include_once 'SRC/User.php';
 include_once 'SRC/Tweet.php';
@@ -6,39 +7,28 @@ include_once 'SRC/db_config_inc.php';
 
 $conn = getDbConnection();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $loggedUser = User::loadUserByEmail($conn, $email);
-        if ($loggedUser != null) {
-            $hash = $loggedUser->getHashedPassword();
-            if (password_verify($password, $hash)) {
-                $_SESSION['user_id'] = $loggedUser->getId();
-            } else {
-                header("Loaction: 02_loginPage.php");
-                echo "Niepoprawne hasło";
-                echo "<br><a href='02_loginPage.php'><< Powrót</a>";
-                exit;
-            }
-        } else {
-            header("Loaction: 02_loginPage.php");
-            echo "Brak użytkownika o podanym adresie e-mail";
-            echo "<br><a href='02_loginPage.php'><< Powrót</a>";
-            exit;
-        }
-    } else {
-        header("Loaction: 02_loginPage.php");
-        echo "Podaj e-mail oraz hasło";
-        echo "<br><a href='02_loginPage.php'><< Powrót</a>";
-        exit;
-    }
+if (isset($_SESSION['logged_in']) 
+    && $_SESSION['logged_in'] == true
+    && isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+} else {
+    echo "<br><a href='02_loginPage.php'>Zaloguj się</a>";
+    exit;
 }
 
 $allTweets = Tweet::loadAllTweets($conn);
 
-//var_dump($_SESSION);
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['tweet_text']) && $_POST['tweet_text'] != "") {
+        $tweetText = $_POST['tweet_text'];
+        $newTweet = new Tweet();
+        $newTweet->setText($tweetText);
+        $newTweet->setUserId($userId);
+        $newTweet->saveToDB($conn);
+    } else {
+        echo "Wpisz treść!";
+    }
+}
 
 ?>
 
@@ -48,8 +38,9 @@ $allTweets = Tweet::loadAllTweets($conn);
     </head>
     <body>
     <div>
-        <form>
-            
+        <form action="" method="POST">
+            <textarea name="tweet_text" maxlength="140" placeholder="co masz na myśli?"></textarea><br>
+            <button type="submit" name="send_tweet">Wyślij</button>
         </form>
     </div>
     <div>
@@ -67,7 +58,6 @@ foreach ($allTweets as $tweet) {
     echo "</tr>";
 }
 ?>
-
         </table>
     </div>
     </body>

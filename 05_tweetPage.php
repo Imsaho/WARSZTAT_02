@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+    echo "";
+} else {
+    echo "<br><a href='02_loginPage.php'>Zaloguj się</a>";
+    exit;
+}
 
 include_once 'SRC/User.php';
 include_once 'SRC/Tweet.php';
@@ -37,6 +44,7 @@ $tweet = Tweet::loadTweetById($conn, $tweetId);
 
 ?>
         </table>
+         <a href="01_mainPage.php">Powrót do srony głównej</a>
     </div>
     </body>
 </html>
