@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="text" name="email"></input>
                 <br>
                 <label>Hasło:</label>
-                <input type="text" name="password"></input>
+                <input type="password" name="password"></input>
                 <br>
                 <button type="submit">Zaloguj</button>
             </form>
