@@ -125,7 +125,7 @@ class Tweet {
                 $this->id = $statement->insert_id;
                 return true;
             } else {
-                echo "Problem z zapytaniem: " . $statement.error;
+                echo "Problem z zapytaniem: " . $statement->error;
             }
             return false;
         }
