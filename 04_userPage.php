@@ -45,6 +45,10 @@ foreach ($allUserTweets as $tweet) {
 ?>
         </table>
     </div>
+        <div>
+            <button type="button"><a href="09_createMail.php?receiver_id=<?=$userId?>" style="text-decoration: none">Wyślij wiadomość temu użytkownikowi</a></button>
+        </div>
+        <hr>
         <a href="01_mainPage.php">Powrót do srony głównej</a>
     </body>
 </html>

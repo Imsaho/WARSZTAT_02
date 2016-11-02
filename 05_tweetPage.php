@@ -74,9 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
         </table>
-        <hr>
-         <a href="01_mainPage.php">Powrót do srony głównej</a>
     </div>
+         <hr>
+        <a href="01_mainPage.php">Powrót do srony głównej</a>
     </body>
 </html>
 
