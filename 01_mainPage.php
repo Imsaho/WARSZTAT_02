@@ -37,7 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
     </head>
     <body>
-        <div>
+        <div class="menu">
+            <a href="01_mainPage.php">Strona główna | </a>
+            <a href="07_mailboxPage.php">Wiadomości | </a>
+            <a href="06_editUserPage.php">Profil | </a>
             <a href="02_loginPage.php">Wyloguj</a>
         </div>
     <div>

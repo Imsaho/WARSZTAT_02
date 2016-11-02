@@ -45,7 +45,7 @@ $message = Message::loadMessageById($conn, $messageId);
             </table>
         </div>
          <hr>
-        <a href="01_mainPage.php">Powrót do srony głównej</a>
+         <a href="07_mailboxPage.php">Powrót do wiadomości</a>
     </body>
 </html>
 
