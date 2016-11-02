@@ -37,6 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
     </head>
     <body>
+        <div>
+            <a href="02_loginPage.php">Wyloguj</a>
+        </div>
     <div>
         <form action="" method="POST">
             <textarea name="tweet_text" maxlength="140" placeholder="co masz na myśli?"></textarea><br>

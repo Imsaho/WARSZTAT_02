@@ -6,10 +6,12 @@ include_once 'SRC/db_config_inc.php';
 
 $conn = getDbConnection();
 
-//if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-//    echo "Jesteś już zalogowany";
-//    exit;
-//}
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
+    $_SESSION['logged_in'] = false;
+    unset($_SESSION['user_id']);
+    echo "Zostałeś wylogowany!";
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
