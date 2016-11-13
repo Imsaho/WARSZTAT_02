@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div>
         <form action="" method="POST">
             <h3>Nowa wiadomość do: <?=User::loadUserById($conn, $receiverId)->getUsername()?></h3>
-            <textarea name="message_text" placeholder="wpisz treść wiadomości"></textarea><br>
+            <textarea name="message_text" placeholder="wpisz treść wiadomości" maxlength="140" cols="50" rows="10" style="resize: none"></textarea><br>
             <button type="submit" name="send_message">Wyślij</button>
         </form>
         </div>

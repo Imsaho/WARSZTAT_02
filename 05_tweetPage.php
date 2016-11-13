@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <body>
           <div>
             <form action="" method="POST">
-            <textarea name="comment_text" maxlength="60" placeholder="skomentuj!"></textarea><br>
+            <textarea name="comment_text" maxlength="60" placeholder="skomentuj!" cols="50" rows="10" style="resize: none"></textarea><br>
             <button type="submit" name="send_comment">Wyślij</button>
              </form>
          </div>

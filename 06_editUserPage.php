@@ -42,12 +42,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo "Niepoprawne hasło";
                 }
                 break;
+            case 'user_delete':
+                $newEmail = "e-mail address id: " . $loggedUserId;
+                $currentUser->setEmail($newEmail);
+                $currentUser->setUsername("Użytkownik usunięty");
+                $currentUser->setHashedPassword("Użytkownik usunięty");
+                if ($currentUser->saveToDB($conn)) {
+                    $_SESSION['logged_in'] = false;
+                    unset($_SESSION['user_id']);
+                }
             default:
                 break;
         }
     }
 }
-
 ?>
 
 <html>
@@ -76,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label>Potwierdź hasło:</label>
                 <input type="password" name="password2"></input><br>                
                 <button type="submit" name="submit" value="password">Zmień</button>
+            </form>
+
+            <form action="02_loginPage.php" method="POST">
+                <label>Usuń konto</label>
+                <button type="submit" name="submit" value="user_delete">Usuń konto</button>
             </form>
 
         </div>

@@ -16,8 +16,6 @@ if (isset($_SESSION['logged_in'])
     exit;
 }
 
-$allTweets = Tweet::loadAllTweets($conn);
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['tweet_text']) && $_POST['tweet_text'] != "") {
         $tweetText = $_POST['tweet_text'];
@@ -29,6 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Wpisz treść!";
     }
 }
+
+$allTweets = Tweet::loadAllTweets($conn);
 
 ?>
 
@@ -43,10 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="06_editUserPage.php">Profil | </a>
             <a href="02_loginPage.php">Wyloguj</a>
         </div>
+        <br/>
     <div>
         <form action="" method="POST">
-            <textarea name="tweet_text" maxlength="140" placeholder="co masz na myśli?"></textarea><br>
-            <button type="submit" name="send_tweet">Wyślij</button>
+            <textarea name="tweet_text" maxlength="140" placeholder="co masz na myśli?" style="resize: none" cols="50" rows="10"></textarea><br>
+            <input type="submit" name="send_tweet" value="wyślij!">
         </form>
     </div>
     <div>
